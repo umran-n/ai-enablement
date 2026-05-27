@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Enablement Program — Umran Nayani</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f5f0e8;
+    --teal: #0d6e6e;
+    --teal-light: #1a9a9a;
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --rule: #0a0a0a;
+    --muted: #5a5a5a;
+    --accent-bg: #0d6e6e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 52px;
+    position: relative;
+  }
+
+  /* HEADER */
+  .header {
+    border-top: 4px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 20px 0 16px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 20px;
+  }
+
+  .program-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+
+  .program-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  .program-title span {
+    color: var(--teal);
+  }
+
+  .header-meta {
+    text-align: right;
+  }
+
+  .header-meta .by {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .header-meta .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .header-meta .title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 1px;
+  }
+
+  /* PILOT BANNER */
+  .pilot-banner {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 20px 28px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .pilot-label-block {
+    border-right: 1px solid rgba(245,240,232,0.2);
+    padding-right: 24px;
+  }
+
+  .pilot-label-block .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+  }
+
+  .pilot-label-block .inst {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .pilot-label-block .date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(245,240,232,0.5);
+    margin-top: 2px;
+  }
+
+  .pilot-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat .desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.65);
+    line-height: 1.3;
+  }
+
+  /* STANDOUT QUOTE */
+  .standout {
+    border-left: 4px solid var(--teal);
+    padding: 10px 16px;
+    margin-bottom: 28px;
+    background: rgba(13,110,110,0.06);
+  }
+
+  .standout p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  .standout p strong {
+    font-style: normal;
+    color: var(--teal);
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* PHASES GRID */
+  .phases-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .phase-card {
+    border: 1px solid #ccc;
+    padding: 14px 12px;
+    position: relative;
+    background: #fff;
+  }
+
+  .phase-card.featured {
+    border-color: var(--teal);
+    background: rgba(13,110,110,0.04);
+  }
+
+  .phase-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .phase-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .phase-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .phase-duration {
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .phase-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ink);
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    margin-top: auto;
+  }
+
+  .phase-price .cohort {
+    color: var(--teal);
+    font-size: 9px;
+    margin-top: 2px;
+  }
+
+  .pilot-badge {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background: var(--gold);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 5px;
+  }
+
+  /* BOTTOM GRID */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  /* DIFFERENTIATION */
+  .diff-block {
+  }
+
+  .diff-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-bottom: 1px;
+  }
+
+  .diff-cell {
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+
+  .diff-cell.label {
+    background: #e8e4dc;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .diff-cell.trad {
+    background: #f0ece4;
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  .diff-cell.ai {
+    background: var(--teal);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .diff-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-bottom: 1px;
+  }
+
+  .diff-header-cell {
+    padding: 6px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .diff-header-cell.trad-h { background: #d0ccc4; color: var(--muted); }
+  .diff-header-cell.ai-h { background: var(--ink); color: var(--paper); }
+
+  /* CREDENTIALS */
+  .cred-block {
+  }
+
+  .cred-item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0ddd8;
+  }
+
+  .cred-item:last-child { border-bottom: none; }
+
+  .cred-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .cred-title {
+    font-size: 11.5px;
+    font-weight: 500;
+    margin-bottom: 1px;
+  }
+
+  .cred-desc {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* CTA */
+  .cta-bar {
+    background: var(--teal);
+    color: var(--paper);
+    padding: 18px 28px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cta-bar .cta-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .cta-bar .cta-sub {
+    font-size: 11px;
+    color: rgba(245,240,232,0.75);
+    margin-top: 3px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .cta-contact {
+    text-align: right;
+  }
+
+  .cta-contact .contact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 4px;
+  }
+
+  .cta-contact .contact-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .cta-contact .contact-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-light);
+    margin-top: 2px;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-align: right;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .page { padding: 20px 28px; }
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 20px; }
+    .phases-grid { grid-template-columns: repeat(2, 1fr); }
+    .pilot-stats { grid-template-columns: repeat(2, 1fr); }
+    .bottom-grid { grid-template-columns: 1fr; }
+    .header { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; }
+    .cta-bar { grid-template-columns: 1fr; }
+    .cta-contact { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="program-label">Institutional Program Brief · May 2026</div>
+      <div class="program-title">AI Enablement<br><span>Applied AI Program</span></div>
+    </div>
+    <div class="header-meta">
+      <div class="by">Prepared by</div>
+      <div class="name">Umran Nayani</div>
+      <div class="title">CAIO · Quantumist.ai · Anthropic Partner</div>
+    </div>
+  </div>
+
+  <!-- PILOT BANNER -->
+  <div class="pilot-banner">
+    <div class="pilot-label-block">
+      <div class="tag">Live Pilot Results</div>
+      <div class="inst">Rizvi College<br>of Engineering</div>
+      <div class="date">February 2026 · Mumbai</div>
+    </div>
+    <div class="pilot-stats">
+      <div class="stat">
+        <div class="num">89</div>
+        <div class="desc">Students Participated</div>
+      </div>
+      <div class="stat">
+        <div class="num">113</div>
+        <div class="desc">Production Agents Deployed</div>
+      </div>
+      <div class="stat">
+        <div class="num">95%</div>
+        <div class="desc">3-Day Retention Rate</div>
+      </div>
+      <div class="stat">
+        <div class="num">3 Days</div>
+        <div class="desc">Intensive Format</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STANDOUT -->
+  <div class="standout">
+    <p>Students were <strong>voluntarily building past midnight on Day 1.</strong> 113 production AI agents shipped across domains including career coaching, finance, government services, and education — all within a 3-day intensive. No prior AI experience required.</p>
+  </div>
+
+  <!-- PHASES -->
+  <div class="section-label">The 5-Phase Progression Model — Transforming Students into AI-Native Architects</div>
+  <div class="phases-grid">
+
+    <div class="phase-card featured">
+      <div class="pilot-badge">✓ Piloted</div>
+      <div class="phase-num">Phase 01</div>
+      <div class="phase-name">Agentic AI Foundation</div>
+      <div class="phase-sub">Consumer AI Deployment</div>
+      <div class="phase-duration">3 Days · Intensive</div>
+      <div class="phase-price">
+        ₹5,000 / seat
+        <div class="cohort">₹1.5L · 100 students</div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-num">Phase 02</div>
+      <div class="phase-name">Agentic AI Builder</div>
+      <div class="phase-sub">Production SaaS Development</div>
+      <div class="phase-duration">3 Weeks · 2 Sessions/Week</div>
+      <div class="phase-price">
+        ₹9,000 / seat
+        <div class="cohort">₹2.65L · 50 students</div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-num">Phase 03</div>
+      <div class="phase-name">Agentic AI Sovereign</div>
+      <div class="phase-sub">Infrastructure Independence</div>
+      <div class="phase-duration">4 Weeks · 2 Sessions/Week</div>
+      <div class="phase-price">
+        ₹20,000 / seat
+        <div class="cohort">₹12L · 100 students</div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-num">Phase 04</div>
+      <div class="phase-name">Enterprise AI Play</div>
+      <div class="phase-sub">Revenue Generation</div>
+      <div class="phase-duration">6 Weeks · Portfolio Sprint</div>
+      <div class="phase-price">
+        ₹50,000 / seat
+        <div class="cohort">₹9L · 25 students</div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-num">Phase 05</div>
+      <div class="phase-name">Sovereign AI Research</div>
+      <div class="phase-sub">Fine-Tuning & IP Creation</div>
+      <div class="phase-duration">4 Weeks · Research Sprint</div>
+      <div class="phase-price">
+        ₹75,000 / seat
+        <div class="cohort">₹6L · 10 students</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM GRID -->
+  <div class="bottom-grid">
+
+    <!-- DIFFERENTIATION -->
+    <div class="diff-block">
+      <div class="section-label">Why This Is Different</div>
+      <div class="diff-header">
+        <div class="diff-header-cell trad-h">Traditional Model</div>
+        <div class="diff-header-cell ai-h">AI Enablement</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell trad-h" style="background:#e0dcd4;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);padding:7px 10px;text-transform:uppercase;letter-spacing:0.5px;">Passive Lectures</div>
+        <div class="diff-cell ai" style="">Live Build Competitions</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell trad-h" style="background:#e0dcd4;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);padding:7px 10px;text-transform:uppercase;letter-spacing:0.5px;">Theory First</div>
+        <div class="diff-cell ai">Deployed from Hour 1</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell trad-h" style="background:#e0dcd4;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);padding:7px 10px;text-transform:uppercase;letter-spacing:0.5px;">Exam Scores</div>
+        <div class="diff-cell ai">Live Production Deployments</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell trad-h" style="background:#e0dcd4;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);padding:7px 10px;text-transform:uppercase;letter-spacing:0.5px;">30–60% Retention</div>
+        <div class="diff-cell ai">95% Retention (Proven)</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell trad-h" style="background:#e0dcd4;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);padding:7px 10px;text-transform:uppercase;letter-spacing:0.5px;">₹1.5L+ Bootcamps</div>
+        <div class="diff-cell ai">₹9,000 All-Inclusive</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell trad-h" style="background:#e0dcd4;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);padding:7px 10px;text-transform:uppercase;letter-spacing:0.5px;">Portfolio Projects</div>
+        <div class="diff-cell ai">Revenue Before Graduation</div>
+      </div>
+    </div>
+
+    <!-- CREDENTIALS -->
+    <div class="cred-block">
+      <div class="section-label">Instructor Credentials</div>
+
+      <div class="cred-item">
+        <div class="cred-icon">AP</div>
+        <div>
+          <div class="cred-title">Anthropic Claude Partner Network</div>
+          <div class="cred-desc">Official partner in Anthropic's global AI ecosystem — the same models powering frontier enterprise AI</div>
+        </div>
+      </div>
+
+      <div class="cred-item">
+        <div class="cred-icon">WB</div>
+        <div>
+          <div class="cred-title">World Bank Group Vendor</div>
+          <div class="cred-desc">IFC-cleared vendor (ID: VMP0000315) — cleared institutional due diligence at the highest level</div>
+        </div>
+      </div>
+
+      <div class="cred-item">
+        <div class="cred-icon">SR</div>
+        <div>
+          <div class="cred-title">Top 6% SSRN Research Author</div>
+          <div class="cred-desc">Ranked among top 6% of 2.7M+ authors globally — 9 published papers across original AI frameworks</div>
+        </div>
+      </div>
+
+      <div class="cred-item">
+        <div class="cred-icon">150K</div>
+        <div>
+          <div class="cred-title">150,000+ Students Taught</div>
+          <div class="cred-desc">Courses sold across 187 countries — proven curriculum design and delivery at scale</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA BAR -->
+  <div class="cta-bar">
+    <div>
+      <div class="cta-text">Ready to bring this to your institution?<br>Phase 1 can run within 2 weeks of confirmation.</div>
+      <div class="cta-sub">Entry point: Phase 1 · 3-Day Intensive · ₹1.5L for 100 students · Zero infrastructure cost</div>
+    </div>
+    <div class="cta-contact">
+      <div class="contact-label">Contact</div>
+      <div class="contact-name">Umran Nayani</div>
+      <div class="contact-detail">CAIO · Quantumist.ai</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">AI Enablement Program · Quantumist.ai · © 2026 Umran Nayani</div>
+    <div class="footer-right">Pilot Completed: Rizvi College of Engineering · Feb 2026</div>
+  </div>
+
+</div>
+</body>
+</html>

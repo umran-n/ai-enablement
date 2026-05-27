@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rizvi AI Takeover — 113 Agents in 3 Days</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f5f0e8;
+    --teal: #0d6e6e;
+    --teal-light: #1a9a9a;
+    --teal-bg: rgba(13,110,110,0.07);
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --muted: #5a5a5a;
+    --card-bg: #ffffff;
+    --border: #d8d4cc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 48px 52px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '113';
+    position: absolute;
+    right: 40px;
+    top: -20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .hero-title span { color: var(--gold-light); }
+
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(245,240,232,0.65);
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 0;
+    width: fit-content;
+    border: 1px solid rgba(245,240,232,0.15);
+  }
+
+  .hero-stat {
+    padding: 16px 28px;
+    border-right: 1px solid rgba(245,240,232,0.15);
+    text-align: center;
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat .n {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-stat .l {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+  }
+
+  /* FILTERS */
+  .filters-wrap {
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 52px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .filter-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+  .search-input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--ink);
+    outline: none;
+    width: 200px;
+    margin-left: auto;
+  }
+
+  .search-input:focus { border-color: var(--teal); }
+  .search-input::placeholder { color: var(--muted); }
+
+  /* MAIN */
+  .main {
+    padding: 32px 52px 52px;
+  }
+
+  /* DOMAIN SECTIONS */
+  .domain-section {
+    margin-bottom: 36px;
+  }
+
+  .domain-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .domain-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  .domain-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    background: var(--teal);
+    color: #fff;
+    padding: 2px 7px;
+    letter-spacing: 1px;
+  }
+
+  /* AGENT GRID */
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+
+  .agent-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .agent-card:hover {
+    border-color: var(--teal);
+    background: rgba(13,110,110,0.03);
+    transform: translateY(-1px);
+  }
+
+  .agent-card.no-link {
+    cursor: default;
+    opacity: 0.6;
+  }
+
+  .agent-card.no-link:hover {
+    transform: none;
+    border-color: var(--border);
+    background: var(--card-bg);
+  }
+
+  .agent-team {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .agent-team.titans { color: #1a5f9e; }
+  .agent-team.mvp { color: #8b3a8b; }
+
+  .agent-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .agent-creator {
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .agent-link-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+    opacity: 0.3;
+  }
+
+  .agent-card:hover .agent-link-icon { opacity: 0.8; }
+
+  /* COUNT BAR */
+  .count-bar {
+    padding: 12px 52px;
+    background: var(--teal-bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--teal);
+    text-transform: uppercase;
+  }
+
+  /* LEADERBOARD */
+  .leaderboard-wrap {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 52px;
+    margin-bottom: 0;
+  }
+
+  .lb-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+  }
+
+  .lb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .lb-card {
+    border: 1px solid rgba(245,240,232,0.12);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lb-rank {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--gold-light);
+    opacity: 0.5;
+    min-width: 28px;
+  }
+
+  .lb-rank.top { opacity: 1; }
+
+  .lb-info .name {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .lb-info .count {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(245,240,232,0.45);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--paper);
+    border-top: 1px solid var(--border);
+    padding: 16px 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--teal);
+    letter-spacing: 1px;
+  }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 700px) {
+    .hero, .main, .filters-wrap, .leaderboard-wrap, .footer, .count-bar {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .hero::before { display: none; }
+    .search-input { width: 100%; margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Live Evidence · Rizvi College of Engineering · February 2026</div>
+  <div class="hero-title">The <span>AI Takeover</span><br>MVP vs Tech Titans</div>
+  <div class="hero-sub">113 production AI agents built and deployed by engineering students with zero prior AI experience — in 72 hours.</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="n">89</div><div class="l">Students</div></div>
+    <div class="hero-stat"><div class="n">113</div><div class="l">Agents Deployed</div></div>
+    <div class="hero-stat"><div class="n">95%</div><div class="l">3-Day Retention</div></div>
+    <div class="hero-stat"><div class="n">72hrs</div><div class="l">Total Duration</div></div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-wrap">
+  <span class="filter-label">Filter</span>
+  <button class="filter-btn active" onclick="filterTeam('all', this)">All Agents</button>
+  <button class="filter-btn" onclick="filterTeam('Tech Titans', this)">Tech Titans</button>
+  <button class="filter-btn" onclick="filterTeam('MVP', this)">MVP</button>
+  <input type="text" class="search-input" placeholder="Search agents..." oninput="searchAgents(this.value)">
+</div>
+
+<div class="count-bar" id="count-bar">Showing all 113 agents</div>
+
+<!-- MAIN CONTENT -->
+<div class="main" id="main-grid">
+</div>
+
+<!-- LEADERBOARD -->
+<div class="leaderboard-wrap">
+  <div class="lb-title">Top Builders · Most Agents Deployed</div>
+  <div class="lb-grid" id="leaderboard"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-left">AI Enablement Program · Quantumist.ai · Umran Nayani · CAIO</div>
+  <div class="footer-right">Every link below is a live deployed agent →</div>
+</div>
+
+<script>
+const agents = [
+  {team:"Tech Titans",creator:"Zaid Shaikh",name:"Sentinel.AI",url:"https://chatgpt.com/g/g-698c9f94d0b48191a3e761cae30ea9e4-sentinel-ai",domain:"Security & Trust"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Luminaris",url:"https://chatgpt.com/g/g-6985b6770d5c8191942d32bdf8093609-luminaris",domain:"Productivity"},
+  {team:"MVP",creator:"Sagarika Srivastava",name:"Mattly.ai",url:"https://chatgpt.com/g/g-6985bd4e98dc819187022d8749c37ce9-mattly-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Disha Gawade",name:"INSIGHT-IQ.ai",url:"https://chatgpt.com/g/g-698d847a79f881918b34d87e935ada27-insight-iq",domain:"Finance & Business"},
+  {team:"Tech Titans",creator:"Girish Sakpal",name:"PlanAIr",url:"https://chatgpt.com/g/g-698cb65573908191a3480b7de043c1ba-planair",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Zaid Shaikh",name:"InterviewCoach.ai",url:"https://chatgpt.com/g/g-698d8b95f6b48191a70cc194edaf19fd-interviewcoach-ai",domain:"Career"},
+  {team:"Tech Titans",creator:"Shaikh Sufiyan",name:"Adstudio.ai",url:"https://chatgpt.com/g/g-6985b08cb4b8819187d3ef57414da620-adstudio-ai",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Zaara Khan",name:"FocusForge.ai",url:"https://chatgpt.com/g/g-698d8e592e548191b999c4c657eaaef5-focusforge-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Mohd Muzammil",name:"Tutor.ai",url:"https://chatgpt.com/g/g-6985b102b3808191afc11e216faae63f-tutor-ai",domain:"Education"},
+  {team:"Tech Titans",creator:"Zaara Khan",name:"SecureSaathi",url:"https://chatgpt.com/g/g-6985b14a72e88191b24b699f1da360a4-securesaathi-ai",domain:"Security & Trust"},
+  {team:"Tech Titans",creator:"Abdullah Shaikh",name:"GOVguider.ai",url:"https://chatgpt.com/g/g-6985b09f6b6c8191acb8d19e1239ba90-govguider-ai",domain:"Government & Civic"},
+  {team:"Tech Titans",creator:"Armaan Shaikh",name:"DealMind AI",url:"https://chatgpt.com/g/g-698caf2e7f848191805558d61f8ab7e0-dealmind-ai",domain:"Finance & Business"},
+  {team:"MVP",creator:"Anshika Shukla",name:"Orbit AI",url:"https://chatgpt.com/g/g-6985ba7534008191a0bf85c13cf6a636-orbitai",domain:"Productivity"},
+  {team:"MVP",creator:"Anshika Shukla",name:"CareerPath AI",url:"https://chatgpt.com/g/g-6985fb48f5b88191b808fecb6c127c0c-careerpath-ai",domain:"Career"},
+  {team:"MVP",creator:"Anshika Shukla",name:"CivicPulse AI",url:"https://chatgpt.com/g/g-698d900c8abc81919a3c6d8d297ad731-civicpulse",domain:"Government & Civic"},
+  {team:"MVP",creator:"Zaara Khan",name:"SkillStack AI",url:"https://chatgpt.com/g/g-698d8f722bf081918b7e16e57715e5e5-skillstack-ai",domain:"Education"},
+  {team:"Tech Titans",creator:"Mohd Qayam",name:"TheResolver.ai",url:"https://chatgpt.com/g/g-698c852e74988191a6587feab1bb022d-theresolver-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Hrishi Patil",name:"Code Archaeologist",url:"https://chatgpt.com/g/g-698d89d47e588191a61c52f7e29e4e9c-code-archaeologist",domain:"Engineering & Code"},
+  {team:"Tech Titans",creator:"Mayur Patil",name:"Jim Simons AI",url:"https://chatgpt.com/g/g-698d8b5e6c7881919a5b8df611821482-jim-simons-gpt",domain:"Finance & Business"},
+  {team:"Tech Titans",creator:"Affan Ansari",name:"Optima.ai",url:"https://chatgpt.com/g/g-6985b1203e108191978791c4a65ff904-optima-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Fiza Khan",name:"MediGuard.AI",url:"https://chatgpt.com/g/g-698d6bd4c7d8819182a7a53f5bb7de35-mediguard-ai",domain:"Healthcare"},
+  {team:"MVP",creator:"Yahya Rodrigues",name:"CreativeBhai",url:"https://chatgpt.com/g/g-6985bb14c3048191a992940cdff061c5-creativebhai",domain:"Creative & Content"},
+  {team:"MVP",creator:"Sidra Shaikh",name:"Engineering Solutions",url:"https://chatgpt.com/g/g-6988ed6df6ac81918f65f63f6f6f69b2-engineering-solutions",domain:"Engineering & Code"},
+  {team:"Tech Titans",creator:"Kaif Shaikh",name:"InterviewPro.ai",url:"https://chatgpt.com/g/g-698d89224edc81918cf936a3a4c58267-interviewpro-ai",domain:"Career"},
+  {team:"MVP",creator:"Sidra Shaikh",name:"Vidcraft.ai",url:"https://chatgpt.com/g/g-6985c3c1db6c8191b0fbdc6af0865c6e-vidcraft-ai",domain:"Creative & Content"},
+  {team:"MVP",creator:"Abdullah Shaikh",name:"NextStep.ai",url:"https://chatgpt.com/g/g-698d880a79d88191b5b576b177fb41a5-nextstep-ai",domain:"Career"},
+  {team:"Tech Titans",creator:"Kaif Shaikh",name:"StockSense.ai",url:"https://chatgpt.com/g/g-6985be0dc3a481919a2a86c556acf0fa-stocksense-ai",domain:"Finance & Business"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Cartograph.ai",url:"https://chatgpt.com/g/g-698d8c7b337c8191b8ae0b94dbecee46-cartograph-ai",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Mayur Patil",name:"Buffett's AI",url:"https://chatgpt.com/g/g-698d8daa01048191a457af018966f3d8-buffet-s-gpt",domain:"Finance & Business"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Praevid.ai",url:"https://chatgpt.com/g/g-698d8e2559a08191b7b8074679b6b19c-praevid-ai",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Hrishi Patil",name:"Life Transition Finance Strategist",url:"https://chatgpt.com/g/g-698d8d426ff48191b474e44b25c640c2-life-transition-finance-strategist",domain:"Finance & Business"},
+  {team:"MVP",creator:"Sakshi Jha",name:"PixelMind",url:"https://chatgpt.com/g/g-69871cb377c88191a214ae0f54ea54b5-pixelmind",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Assay.ai",url:"https://chatgpt.com/g/g-698d8d886cc8819198a382e6ac84fc62-assay-ai",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Comparator.ai",url:"https://chatgpt.com/g/g-698d8d886cc8819198a382e6ac84fc62-comparator-ai",domain:"Data & Analytics"},
+  {team:"MVP",creator:"Sagarika Srivastava",name:"ScienceStudy.ai",url:"https://chatgpt.com/g/g-698d8acc376c8191b9721954e30ea6ce-sciencestudy",domain:"Education"},
+  {team:"Tech Titans",creator:"Disha Gawade",name:"Data-Mind",url:"https://chatgpt.com/g/g-698d8e601f9c8191ad2a6453bccea78f-data-mind",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Archivist.ai",url:"https://chatgpt.com/g/g-698d8fe693188191b3ae8a4d5dfdaac7-archivist-ai",domain:"Productivity"},
+  {team:"MVP",creator:"Sakshi Jha",name:"Briefify.ai",url:"https://chatgpt.com/g/g-6985b1bf699c819192ae3b012f710cf4-briefify-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Metricus.ai",url:"https://chatgpt.com/g/g-698d9017b0d88191a7a908b634c9b3d8-metricus-ai",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Contextor.ai",url:"https://chatgpt.com/g/g-698d904caff48191b90227ed9180ff19-contextor-ai",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Mohd Qayam",name:"FlowState",url:"https://chatgpt.com/g/g-698d8f15c3588191ac574a0adb4148a0-flowstate",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Arnav Sawant",name:"IdeaSpark AI",url:"https://chatgpt.com/g/g-698d8e823a5481918159bb6a3b37ff2d-ideaspark-ai",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Economa.ai",url:"https://chatgpt.com/g/g-698d904caff48191b90227ed9180ff19-economa-ai",domain:"Finance & Business"},
+  {team:"Tech Titans",creator:"Huzaifa Mulla",name:"HomeValue.ai",url:"https://chatgpt.com/g/g-698d968d91a08191bd17d575b13d4f17-homevalue-ai",domain:"Finance & Business"},
+  {team:"MVP",creator:"Zaara Khan",name:"CodeRoaster",url:"https://chatgpt.com/g/g-698d90f1ab0c81919c5a95809125cce2-coderoaster-ai",domain:"Engineering & Code"},
+  {team:"Tech Titans",creator:"Zaid Shaikh",name:"PCGuardian.ai",url:"https://chatgpt.com/g/g-698d9353746c8191bc310cd00518289e-pc-guardian-ai",domain:"Security & Trust"},
+  {team:"Tech Titans",creator:"Hrishi Patil",name:"Resume Optimization Specialist",url:"https://chatgpt.com/g/g-698d8fd623c08191a033bc3e7771644f-resume-optimization-specialist",domain:"Career"},
+  {team:"Tech Titans",creator:"Netra Neman",name:"Sarvagya",url:"https://chatgpt.com/g/g-698d84d267b881919f5eba24bc3a16de-sarvagya",domain:"Education"},
+  {team:"MVP",creator:"Soham",name:"CODEBUDDY",url:"https://chatgpt.com/g/g-698d8dc408648191bdcc60ee7cecc7b9-codebuddy",domain:"Engineering & Code"},
+  {team:"Tech Titans",creator:"Shaikh Sufiyan",name:"GateMentor.ai",url:"https://chatgpt.com/g/g-698d8ecb9a808191a3af02ff5371cc5d-gatementor-ai",domain:"Education"},
+  {team:"MVP",creator:"Soham",name:"RiskLens",url:"https://chatgpt.com/g/g-6985bac1cb548191b2a628d92fe94d6e-risklens",domain:"Finance & Business"},
+  {team:"MVP",creator:"Priti Verma",name:"BugZero.ai",url:"https://chatgpt.com/g/g-698d8c518fa88191a3ec81d38496815c-bugzero-ai",domain:"Engineering & Code"},
+  {team:"Tech Titans",creator:"Mohd Qayam",name:"OpsCatalyst",url:"https://chatgpt.com/g/g-698d8fedc3488191aa590a4989379ecb-opscatalyst",domain:"Finance & Business"},
+  {team:"MVP",creator:"Sakshi Jha",name:"Prepverse",url:"https://chatgpt.com/g/g-698d8d1faeac819183af62345eda59de-prepverse",domain:"Education"},
+  {team:"Tech Titans",creator:"Shaikh Alkaish Hussain",name:"MarketResearchAnalysis.ai",url:"https://chatgpt.com/g/g-698d8f4358c88191ae7983c0f3c07abb-marketresearchanalysis-ai",domain:"Finance & Business"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Boundary.ai",url:"https://chatgpt.com/g/g-698d917e31988191815888c7ac1a6b5b-boundary-ai",domain:"Security & Trust"},
+  {team:"MVP",creator:"Zaara Khan",name:"DebateBoss",url:"https://chatgpt.com/g/g-698d91b8cb8881918893fac063f4e611-debateboss-ai",domain:"Education"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Ethos.ai",url:"https://chatgpt.com/g/g-698d91da80348191b84dfdee1c95fe6a-ethos-ai",domain:"Productivity"},
+  {team:"MVP",creator:"Hamza Shaikh",name:"HelpMeFind AI",url:"https://chatgpt.com/g/g-6985b740308481918380949079c54341-helpmefind",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Saizan Mulla",name:"Talk",url:"https://chatgpt.com/g/g-6985c4004b988191a3f94df60114d7c5-talk",domain:"Productivity"},
+  {team:"MVP",creator:"Abdullah Shaikh",name:"Reality Check.ai",url:"https://chatgpt.com/g/g-698d90952e2c8191a341ca7d86556765-reality-check-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Mayur Patil",name:"Takashi Kotegawa",url:"https://chatgpt.com/g/g-698d919a6bec81918a617ce39b130d3b-takashi-kotegawa",domain:"Finance & Business"},
+  {team:"Tech Titans",creator:"Hrishi Patil",name:"Caption Conversation Lab",url:"https://chatgpt.com/g/g-698d92b262a88191b10d755b2dc1ea4f-caption-conversion-lab",domain:"Creative & Content"},
+  {team:"MVP",creator:"Zaara Khan",name:"DeadlineDemon AI",url:"https://chatgpt.com/g/g-698d92e89c8c819181084721d41d93ef-deadlinedemon-ai",domain:"Productivity"},
+  {team:"MVP",creator:"Anshika Shukla",name:"QueueJustice AI",url:"https://chatgpt.com/g/g-698d92116afc81919286dea9cafb2139-queuejustice",domain:"Government & Civic"},
+  {team:"Tech Titans",creator:"Armaan Shaikh",name:"GameTalkNPC",url:"https://chatgpt.com/g/g-698d9250eab88191afdfb429cdb4250c-gametalk-npc",domain:"Creative & Content"},
+  {team:"MVP",creator:"Zaara Khan",name:"PatternHunter AI",url:"https://chatgpt.com/g/g-698d93add86c81918075582c9f79b345-patternhunter-ai",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Operator.ai",url:"https://chatgpt.com/g/g-698d91f2b1cc8191a29bc34071b6719b-operator-ai",domain:"Productivity"},
+  {team:"MVP",creator:"Yahya Rodrigues",name:"BigDawgMusic",url:"https://chatgpt.com/g/g-698d9030ae3c81918914ffd95c08e242-bigdawgmusic",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Generalizer.ai",url:"https://chatgpt.com/g/g-698d92c5f67881919aa248ce68ed9d10-generalizer-ai",domain:"Data & Analytics"},
+  {team:"MVP",creator:"Sakshi Jha",name:"LogoForge.AI",url:"https://chatgpt.com/g/g-698d93bf81f88191872c5978ac2a5b30-logoforge-ai",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Proxy.ai",url:"https://chatgpt.com/g/g-698d92c5f67881919aa248ce68ed9d10-proxy-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Interface.ai",url:"https://chatgpt.com/g/g-698d92c5f67881919aa248ce68ed9d10-proxy-ai",domain:"Engineering & Code"},
+  {team:"Tech Titans",creator:"Mohd Qayam",name:"ShadowOps",url:"https://chatgpt.com/g/g-698d92f246b881919bb54e4af3e46067-shadowops",domain:"Security & Trust"},
+  {team:"Tech Titans",creator:"Mayur Patil",name:"Ray Dalio AI",url:"https://chatgpt.com/g/g-698d946c1b0c8191aabff7f13741ce8b-ray-dalio",domain:"Finance & Business"},
+  {team:"Tech Titans",creator:"Shaikh Sufiyan",name:"ReelWriter.ai",url:"https://chatgpt.com/g/g-698d925d0bf081919c5b85c126e5ded8-reelwriter-ai",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Girish Sakpal",name:"Solace.AI",url:"https://chatgpt.com/g/g-698d9382ee4881918a872f0457e38431-solace-ai",domain:"Healthcare"},
+  {team:"MVP",creator:"Zaara Khan",name:"StoryEngineer AI",url:"https://chatgpt.com/g/g-698d946c105881919bf5e4ed90025743-storyengineer-ai",domain:"Creative & Content"},
+  {team:"MVP",creator:"Sagarika Srivastava",name:"PollutionPop",url:"https://chatgpt.com/g/g-698d944ef66c8191a52e65f9d634cbe2-pollutionpop",domain:"Government & Civic"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Signal.ai",url:"https://chatgpt.com/g/g-698d91e5487c8191aa1fd4def2c40ebb-signal-ai",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Yash Wadkar",name:"AI Internship",url:"https://chatgpt.com/g/g-698d8d70223081918c12fa870177ebfc-ai-internship",domain:"Career"},
+  {team:"Tech Titans",creator:"Zaid Shaikh",name:"CodeSimplifier.ai",url:"https://chatgpt.com/g/g-698d8f484c308191a2d9871329543fe2-codesimplifier-ai",domain:"Engineering & Code"},
+  {team:"Tech Titans",creator:"Hrishi Patil",name:"Questmaster",url:"https://chatgpt.com/g/g-698d93cc20b481919db255e57b6a7e61-questmaster",domain:"Education"},
+  {team:"Tech Titans",creator:"Priti Verma",name:"CareerAssistant.ai",url:"https://chatgpt.com/g/g-698d91bfdfac8191b2e7abca6588af45-researchassistant-ai",domain:"Career"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Drift.ai",url:"https://chatgpt.com/g/g-698d92c5f67881919aa248ce68ed9d10-proxy-ai",domain:"Data & Analytics"},
+  {team:"Tech Titans",creator:"Rehan Shaikh",name:"Response.ai",url:"https://chatgpt.com/g/g-698d92c5f67881919aa248ce68ed9d10-response-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Mansingh Chauhan",name:"FinMate.ai",url:"https://chatgpt.com/g/g-6985b097e4a881919cc2f9e9d4d7a0c1-finmate-ai",domain:"Finance & Business"},
+  {team:"MVP",creator:"Abdullah Shaikh",name:"LifeXP.ai",url:"https://chatgpt.com/g/g-698d9476a74c8191a936c05fd4332422-lifexp-ai",domain:"Productivity"},
+  {team:"Tech Titans",creator:"Kaif Shaikh",name:"BusinessIQ.ai",url:"https://chatgpt.com/g/g-698d955d12488191aebb736fbbb1e096-bussinessiq-ai",domain:"Finance & Business"},
+  {team:"MVP",creator:"Zaara Khan",name:"MainCharacter AI",url:"https://chatgpt.com/g/g-698d962a4698819181adceef9592a76e-maincharacter-ai",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Disha Gawade",name:"Meme Mind",url:"https://chatgpt.com/g/g-698d95f0edf08191aa18c13349d777ac-meme-mind-ai",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Aaditya Waykole",name:"InternMax AI",url:"https://chatgpt.com/g/g-698d86a3af948191ae747b85824c67d1-research-action-ai-agent-for-internship-hunting",domain:"Career"},
+  {team:"MVP",creator:"Zaara Khan",name:"SituationshipTranslator AI",url:"https://chatgpt.com/g/g-698d974a192881919cf6749d4fee39e3-situationshiptranslator-ai",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Mayur Patil",name:"George Soros AI",url:"https://chatgpt.com/g/g-698d9642ef248191859811a7c6936b10-george-soros",domain:"Finance & Business"},
+  {team:"MVP",creator:"Hamza Shaikh",name:"BingeWatcher",url:"https://chatgpt.com/g/g-698d92d020ac8191b25c086cf4ee624c-bingewatcher",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Hrishi Patil",name:"Tiny Tale Panels",url:"https://chatgpt.com/g/g-698d981589bc81919919a5cb855a98b7-tiny-tale-panels",domain:"Creative & Content"},
+  {team:"MVP",creator:"Soham Patade",name:"GptLaunchPad",url:"https://chatgpt.com/g/g-698d95fc38ac8191bffe57c7af70d10a-gpt-launchpad",domain:"Engineering & Code"},
+  {team:"Tech Titans",creator:"Abdullah Shaikh",name:"TaxStriker",url:"https://chatgpt.com/g/g-698d980d23c881918906208585f4a500-taxstriker",domain:"Government & Civic"},
+  {team:"MVP",creator:"Sagarika Srivastava",name:"SongFinder",url:"https://chatgpt.com/g/g-698d97673754819183fc611d1d5bff8f-songfinder",domain:"Creative & Content"},
+  {team:"MVP",creator:"Abdullah Shaikh",name:"CivicBuddy.ai",url:"https://chatgpt.com/g/g-698d98a4fe188191baabe69592db23d5-civicbuddy-ai",domain:"Government & Civic"},
+  {team:"MVP",creator:"Abdullah Shaikh",name:"CreatorFlow",url:"https://chatgpt.com/g/g-698d9d6cc2cc8191b9f41a28785ba989-creatorflow-ai",domain:"Creative & Content"},
+  {team:"Tech Titans",creator:"Yash Wadkar",name:"AI Content Studio",url:"https://chatgpt.com/g/g-698d97ec885c81918c0139374349a5a3-ai-content-studio",domain:"Creative & Content"},
+  {team:"MVP",creator:"Hamza Shaikh",name:"DripFinder",url:"https://chatgpt.com/g/g-698d9b7dc200819191d442b2f187475c-dripfinder",domain:"Productivity"}
+];
+
+const domainOrder = ["Finance & Business","Career","Engineering & Code","Education","Data & Analytics","Creative & Content","Productivity","Government & Civic","Healthcare","Security & Trust"];
+
+let currentTeam = 'all';
+let currentSearch = '';
+
+function normalize(team) {
+  const t = team.trim().toLowerCase();
+  if (t.includes('titan')) return 'Tech Titans';
+  if (t.includes('mvp')) return 'MVP';
+  return team;
+}
+
+function getLeaderboard() {
+  const counts = {};
+  agents.forEach(a => {
+    const name = a.creator.trim();
+    counts[name] = (counts[name] || 0) + 1;
+  });
+  return Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,8);
+}
+
+function render() {
+  const filtered = agents.filter(a => {
+    const team = normalize(a.team);
+    const matchTeam = currentTeam === 'all' || team === currentTeam;
+    const matchSearch = !currentSearch || a.name.toLowerCase().includes(currentSearch.toLowerCase()) || a.creator.toLowerCase().includes(currentSearch.toLowerCase()) || a.domain.toLowerCase().includes(currentSearch.toLowerCase());
+    return matchTeam && matchSearch;
+  });
+
+  const byDomain = {};
+  domainOrder.forEach(d => byDomain[d] = []);
+  filtered.forEach(a => {
+    if (!byDomain[a.domain]) byDomain[a.domain] = [];
+    byDomain[a.domain].push(a);
+  });
+
+  const main = document.getElementById('main-grid');
+  main.innerHTML = '';
+
+  let total = 0;
+  domainOrder.forEach(domain => {
+    const items = byDomain[domain];
+    if (!items || items.length === 0) return;
+    total += items.length;
+
+    const section = document.createElement('div');
+    section.className = 'domain-section';
+
+    const header = document.createElement('div');
+    header.className = 'domain-header';
+    header.innerHTML = `<span class="domain-title">${domain}</span><span class="domain-count">${items.length}</span>`;
+    section.appendChild(header);
+
+    const grid = document.createElement('div');
+    grid.className = 'agent-grid';
+
+    items.forEach(a => {
+      const teamClass = normalize(a.team) === 'Tech Titans' ? 'titans' : 'mvp';
+      const teamLabel = normalize(a.team) === 'Tech Titans' ? 'Tech Titans' : 'MVP';
+      const hasUrl = a.url && a.url.length > 0;
+
+      const card = document.createElement(hasUrl ? 'a' : 'div');
+      if (hasUrl) { card.href = a.url; card.target = '_blank'; card.rel = 'noopener'; }
+      card.className = 'agent-card' + (hasUrl ? '' : ' no-link');
+      card.innerHTML = `
+        <div class="agent-team ${teamClass}">${teamLabel}</div>
+        <div class="agent-name">${a.name}</div>
+        <div class="agent-creator">${a.creator}</div>
+        ${hasUrl ? `<svg class="agent-link-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ''}
+      `;
+      grid.appendChild(card);
+    });
+
+    section.appendChild(grid);
+    main.appendChild(section);
+  });
+
+  document.getElementById('count-bar').textContent = `Showing ${total} of 113 agents`;
+}
+
+function renderLeaderboard() {
+  const lb = getLeaderboard();
+  const container = document.getElementById('leaderboard');
+  container.innerHTML = '';
+  lb.forEach(([name, count], i) => {
+    const card = document.createElement('div');
+    card.className = 'lb-card';
+    card.innerHTML = `
+      <div class="lb-rank ${i < 3 ? 'top' : ''}">${i+1}</div>
+      <div class="lb-info">
+        <div class="name">${name}</div>
+        <div class="count">${count} agent${count > 1 ? 's' : ''} deployed</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function filterTeam(team, btn) {
+  currentTeam = team;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function searchAgents(val) {
+  currentSearch = val;
+  render();
+}
+
+render();
+renderLeaderboard();
+</script>
+</body>
+</html>
