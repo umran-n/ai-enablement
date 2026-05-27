@@ -4,148 +4,457 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Enablement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      color-scheme: light;
-      --ink: #111827;
-      --muted: #667085;
-      --paper: #fbfaf8;
-      --line: #ded8cf;
-      --accent: #256f67;
-      --accent-2: #8a4d2f;
+      --ink: #0a0a0a;
+      --paper: #f5f0e8;
+      --paper-light: #fffaf1;
+      --teal: #0d6e6e;
+      --teal-light: #1a9a9a;
+      --gold: #b8860b;
+      --gold-light: #d4a017;
+      --muted: #5a5a5a;
+      --border: #d8d4cc;
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--paper);
+      background:
+        linear-gradient(90deg, rgba(10, 10, 10, 0.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 72px 72px;
       color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
-    main {
-      width: min(1060px, calc(100% - 40px));
-      min-height: 100vh;
+    .page {
+      width: min(100%, 1000px);
       margin: 0 auto;
-      display: grid;
-      align-content: center;
-      gap: 32px;
-      padding: 52px 0;
+      padding: 48px 52px;
     }
 
-    header {
+    .site-header {
       display: grid;
-      gap: 12px;
-      max-width: 720px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 28px;
+      border-top: 4px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: 20px 0 16px;
+      margin-bottom: 28px;
     }
 
-    h1 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.7rem, 8vw, 6.5rem);
-      line-height: 0.92;
+    .program-label,
+    .meta-label,
+    .band-label,
+    .card-label,
+    .stat-label,
+    .footer-note {
+      font-family: "DM Mono", monospace;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .program-label {
+      margin-bottom: 6px;
+      color: var(--teal);
+      font-size: 10px;
+    }
+
+    h1,
+    h2,
+    h3,
+    .meta-name,
+    .stat-number {
+      font-family: "Playfair Display", serif;
       letter-spacing: 0;
     }
 
-    p {
-      margin: 0;
+    h1 {
+      max-width: 720px;
+      font-size: 4.5rem;
+      font-weight: 900;
+      line-height: 0.98;
+    }
+
+    h1 span {
+      color: var(--teal);
+    }
+
+    .header-meta {
+      min-width: 180px;
+      text-align: right;
+    }
+
+    .meta-label {
+      margin-bottom: 4px;
       color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.18rem);
-      line-height: 1.6;
+      font-size: 10px;
+    }
+
+    .meta-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .meta-title {
+      color: var(--teal);
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+    }
+
+    .feature-band {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 32px;
+      overflow: hidden;
+      margin-bottom: 28px;
+      padding: 28px;
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .feature-band::before {
+      content: "AI";
+      position: absolute;
+      top: -36px;
+      right: 22px;
+      color: rgba(245, 240, 232, 0.055);
+      font-family: "Playfair Display", serif;
+      font-size: 12rem;
+      font-weight: 900;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .band-content {
+      position: relative;
+      max-width: 560px;
+      z-index: 1;
+    }
+
+    .band-label {
+      margin-bottom: 10px;
+      color: var(--gold-light);
+      font-size: 10px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1.12;
+    }
+
+    .band-copy {
+      max-width: 520px;
+      color: rgba(245, 240, 232, 0.68);
+      font-size: 0.98rem;
+    }
+
+    .stats {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 112px);
+      align-self: end;
+      border: 1px solid rgba(245, 240, 232, 0.16);
+    }
+
+    .stat {
+      min-height: 104px;
+      display: grid;
+      place-items: center;
+      padding: 16px 12px;
+      text-align: center;
+      border-right: 1px solid rgba(245, 240, 232, 0.16);
+    }
+
+    .stat:last-child {
+      border-right: 0;
+    }
+
+    .stat-number {
+      display: block;
+      color: var(--gold-light);
+      font-size: 2.35rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 6px;
+      color: rgba(245, 240, 232, 0.62);
+      font-size: 9px;
+      line-height: 1.3;
+    }
+
+    .standout {
+      margin-bottom: 28px;
+      padding: 12px 18px;
+      border-left: 4px solid var(--teal);
+      background: rgba(13, 110, 110, 0.06);
+      color: var(--ink);
+      font-style: italic;
     }
 
     .pages {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
+      margin-bottom: 22px;
     }
 
-    a {
-      min-height: 220px;
+    .page-card {
+      min-height: 286px;
       display: grid;
       align-content: space-between;
-      gap: 28px;
-      border: 1px solid var(--line);
+      gap: 34px;
+      padding: 26px;
+      border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 24px;
+      background: rgba(255, 250, 241, 0.86);
       color: inherit;
       text-decoration: none;
-      background: #fffefa;
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
     }
 
-    a:hover,
-    a:focus-visible {
-      transform: translateY(-2px);
-      border-color: var(--accent);
-      box-shadow: 0 18px 44px rgba(17, 24, 39, 0.08);
+    .page-card:hover,
+    .page-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--teal);
+      background: var(--paper-light);
+      box-shadow: 0 20px 44px rgba(10, 10, 10, 0.1);
       outline: none;
     }
 
-    .label {
-      color: var(--accent-2);
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .card-top {
+      display: grid;
+      gap: 14px;
     }
 
-    h2 {
-      margin: 12px 0 0;
-      font-size: clamp(1.55rem, 3vw, 2.25rem);
-      line-height: 1.05;
-      letter-spacing: 0;
+    .card-label {
+      display: inline-flex;
+      width: fit-content;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 10px;
+    }
+
+    h3 {
+      font-size: 2.25rem;
+      font-weight: 900;
+      line-height: 1.08;
+    }
+
+    .card-copy {
+      max-width: 360px;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    .card-metric {
+      color: var(--teal);
+      font-family: "Playfair Display", serif;
+      font-size: 1.75rem;
+      font-weight: 900;
+      line-height: 1;
     }
 
     .open {
-      color: var(--accent);
-      font-weight: 700;
+      color: var(--teal);
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    @media (max-width: 720px) {
-      main {
-        width: min(100% - 28px, 1060px);
-        align-content: start;
+    .footer-note {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    @media (max-width: 820px) {
+      .page {
+        padding: 32px 24px;
+      }
+
+      .site-header,
+      .feature-band {
+        grid-template-columns: 1fr;
+      }
+
+      .header-meta {
+        min-width: 0;
+        text-align: left;
+      }
+
+      h1 {
+        font-size: 3.2rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      .stats {
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
       .pages {
         grid-template-columns: 1fr;
       }
+    }
 
-      a {
-        min-height: 190px;
+    @media (max-width: 520px) {
+      body {
+        background-size: 48px 48px;
+      }
+
+      .page {
+        padding: 24px 16px;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      .feature-band {
+        padding: 22px;
+      }
+
+      .feature-band::before {
+        right: -12px;
+        font-size: 8rem;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        min-height: 84px;
+        border-right: 0;
+        border-bottom: 1px solid rgba(245, 240, 232, 0.16);
+      }
+
+      .stat:last-child {
+        border-bottom: 0;
+      }
+
+      .page-card {
+        min-height: 256px;
+        padding: 22px;
+      }
+
+      h3 {
+        font-size: 1.8rem;
       }
     }
   </style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>AI Enablement</h1>
-      <p>Two public-facing pages for the AI enablement program and the Rizvi agent showcase.</p>
+  <main class="page">
+    <header class="site-header">
+      <div>
+        <p class="program-label">AI Enablement</p>
+        <h1>From AI awareness to <span>AI execution</span>.</h1>
+      </div>
+      <div class="header-meta" aria-label="Publisher">
+        <p class="meta-label">Published by</p>
+        <p class="meta-name">Umran Nayani</p>
+        <p class="meta-title">Training / Enablement</p>
+      </div>
     </header>
 
+    <section class="feature-band" aria-label="Site overview">
+      <div class="band-content">
+        <p class="band-label">Live pages</p>
+        <h2>University-ready collateral and a working agent showcase.</h2>
+        <p class="band-copy">A compact launchpad for the AI Enablement program narrative, pilot structure, and the Rizvi agent build sprint.</p>
+      </div>
+      <div class="stats" aria-label="Highlights">
+        <div class="stat">
+          <span>
+            <span class="stat-number">2</span>
+            <span class="stat-label">Published pages</span>
+          </span>
+        </div>
+        <div class="stat">
+          <span>
+            <span class="stat-number">113</span>
+            <span class="stat-label">Student agents</span>
+          </span>
+        </div>
+        <div class="stat">
+          <span>
+            <span class="stat-number">3</span>
+            <span class="stat-label">Build days</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <p class="standout">Built for decision-makers who need the story, the operating model, and proof of student execution in one polished public hub.</p>
+
     <section class="pages" aria-label="Published pages">
-      <a href="ai_enablement_onepager.html">
-        <span>
-          <span class="label">Program</span>
-          <h2>AI Enablement Program</h2>
+      <a class="page-card" href="ai_enablement_onepager.html">
+        <span class="card-top">
+          <span class="card-label">01 / Program</span>
+          <span>
+            <h3>AI Enablement Program</h3>
+            <p class="card-copy">The one-page overview for a hands-on AI training model, pilot format, outcomes, and institutional value.</p>
+          </span>
         </span>
-        <span class="open">Open page</span>
+        <span class="card-bottom">
+          <span class="card-metric">Pilot</span>
+          <span class="open">Open page &rarr;</span>
+        </span>
       </a>
 
-      <a href="rizvi_agent_showcase.html">
-        <span>
-          <span class="label">Showcase</span>
-          <h2>Rizvi AI Takeover</h2>
+      <a class="page-card" href="rizvi_agent_showcase.html">
+        <span class="card-top">
+          <span class="card-label">02 / Showcase</span>
+          <span>
+            <h3>Rizvi AI Takeover</h3>
+            <p class="card-copy">A browsable showcase of 113 student-built AI agents created during the three-day Rizvi College sprint.</p>
+          </span>
         </span>
-        <span class="open">Open page</span>
+        <span class="card-bottom">
+          <span class="card-metric">113</span>
+          <span class="open">Open page &rarr;</span>
+        </span>
       </a>
     </section>
+
+    <p class="footer-note">AI Enablement / Public pages / GitHub Pages</p>
   </main>
 </body>
 </html>
